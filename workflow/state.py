@@ -9,5 +9,7 @@ class AgentState(TypedDict):
 
     eda_report: dict
 
+    feature_engineering_report: dict
+
     final_report: str
     
