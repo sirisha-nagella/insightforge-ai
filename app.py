@@ -27,4 +27,13 @@ if uploaded_file:
 
     st.subheader("Generated Report")
     st.write(result["final_report"])
+
+    st.subheader(
+        "Feature Engineering Report"
+    )
+
+    st.json(
+        result["feature_engineering_report"]
+    )
+
     
