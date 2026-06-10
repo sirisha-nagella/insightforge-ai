@@ -17,6 +17,6 @@ venv/
 # OS
 .DS_Store
 
-# Data & generated reports (uncomment if you don't want these tracked)
-# data/
-# reports/
+# Data files (keep the folder, ignore its contents)
+data/*
+!data/.gitkeep
