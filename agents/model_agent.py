@@ -71,6 +71,8 @@ def model_agent(state):
 
     results = {}
 
+    model_predictions = {}
+
     for name, model in models.items():
 
         model.fit(
@@ -92,12 +94,16 @@ def model_agent(state):
             4
         )
 
+        model_predictions[name] = predictions
+
     # Determine Best Model
 
     best_model = max(
         results,
         key=results.get
     )
+
+    best_predictions = model_predictions[best_model]
 
     # Store Results:
 
@@ -107,7 +113,11 @@ def model_agent(state):
 
         "best_model": best_model,
 
-        "best_accuracy": results[best_model]
+        "best_accuracy": results[best_model],
+
+        "y_test": y_test.tolist(),
+
+        "predictions": best_predictions.tolist()
 
     }
 

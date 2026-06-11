@@ -3,6 +3,7 @@ def report_agent(state):
     dq = state["data_quality_report"]
     fe = state["feature_engineering_report"]
     model_report = state["model_report"]
+    evaluation = state["evaluation_report"]
 
     def _format(d):
         if not d:
@@ -43,7 +44,20 @@ Best Model:
 Accuracy:
 {model_report['best_accuracy']}
 """
+    
+    report += f"""
 
+Evaluation Metrics
+
+Accuracy: {evaluation['accuracy']:.2f}
+
+Precision: {evaluation['precision']:.2f}
+
+Recall: {evaluation['recall']:.2f}
+
+F1 Score: {evaluation['f1']:.2f}
+"""
+    
     state["final_report"] = report
 
     return state

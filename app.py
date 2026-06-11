@@ -42,4 +42,10 @@ if uploaded_file:
         result["model_report"]
     )
 
-    
+    st.subheader(
+        "Evaluation Metrics"
+    )
+
+    st.json(
+        result["evaluation_report"]
+    )

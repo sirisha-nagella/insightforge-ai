@@ -8,6 +8,8 @@ from agents.eda_agent import eda_agent
 from agents.feature_engineering_agent import feature_engineering_agent
 from agents.report_agent import report_agent
 from agents.model_agent import model_agent
+from agents.evaluation_agent import evaluation_agent
+
 
 def create_graph():
 
@@ -19,6 +21,7 @@ def create_graph():
     graph.add_node("feature_engineering", feature_engineering_agent)
     graph.add_node("report", report_agent)
     graph.add_node("model", model_agent)
+    graph.add_node("evaluation", evaluation_agent)
 
     graph.set_entry_point("planner")
 
@@ -26,7 +29,8 @@ def create_graph():
     graph.add_edge("quality", "eda")
     graph.add_edge("eda", "feature_engineering")
     graph.add_edge("feature_engineering", "model")
-    graph.add_edge("model", "report")
+    graph.add_edge("model", "evaluation")
+    graph.add_edge("evaluation", "report")
 
     graph.set_finish_point("report")
 

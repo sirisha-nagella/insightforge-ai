@@ -13,5 +13,7 @@ class AgentState(TypedDict):
 
     model_report: dict
 
+    evaluation_report: dict
+
     final_report: str
     
