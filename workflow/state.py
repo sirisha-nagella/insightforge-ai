@@ -11,5 +11,7 @@ class AgentState(TypedDict):
 
     feature_engineering_report: dict
 
+    model_report: dict
+
     final_report: str
     

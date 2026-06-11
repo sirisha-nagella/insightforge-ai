@@ -2,6 +2,7 @@ def report_agent(state):
 
     dq = state["data_quality_report"]
     fe = state["feature_engineering_report"]
+    model_report = state["model_report"]
 
     def _format(d):
         if not d:
@@ -32,6 +33,18 @@ Scaling recommendations:
 Drop candidates: {fe['drop_candidates']}
 """
 
+    report += f"""
+
+Model Results
+
+Best Model:
+{model_report['best_model']}
+
+Accuracy:
+{model_report['best_accuracy']}
+"""
+
     state["final_report"] = report
 
     return state
+

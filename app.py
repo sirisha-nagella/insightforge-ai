@@ -36,4 +36,10 @@ if uploaded_file:
         result["feature_engineering_report"]
     )
 
+    st.subheader("Model Results")
+
+    st.json(
+        result["model_report"]
+    )
+
     
