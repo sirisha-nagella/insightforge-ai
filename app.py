@@ -28,34 +28,47 @@ if uploaded_file:
         }
     )
 
-    st.subheader("Dataset Preview")
-    st.dataframe(df.head())
-
-    st.subheader("Generated Report")
-    st.write(result["final_report"])
-
-    st.subheader(
-        "Feature Engineering Report"
+    st.info(
+        f"Target: **{target_column}**  |  "
+        f"Detected problem type: **{result['problem_type']}**"
     )
 
-    st.json(
-        result["feature_engineering_report"]
+    tab_data, tab_report, tab_fe, tab_model, tab_viz = st.tabs(
+        [
+            "Dataset",
+            "Report",
+            "Feature Engineering",
+            "Model & Evaluation",
+            "Visualizations",
+        ]
     )
 
-    st.subheader("Model Results")
+    with tab_data:
+        st.subheader("Dataset Preview")
+        st.dataframe(df.head())
 
-    st.json(
-        {
-            k: v
-            for k, v in result["model_report"].items()
-            if k not in ("y_test", "predictions")
-        }
-    )
+    with tab_report:
+        st.subheader("Generated Report")
+        st.write(result["final_report"])
 
-    st.subheader(
-        "Evaluation Metrics"
-    )
+    with tab_fe:
+        st.subheader("Feature Engineering Report")
+        st.json(result["feature_engineering_report"])
 
-    st.json(
-        result["evaluation_report"]
-    )
+    with tab_model:
+        st.subheader("Model Results")
+        st.json(
+            {
+                k: v
+                for k, v in result["model_report"].items()
+                if k not in ("y_test", "predictions")
+            }
+        )
+
+        st.subheader("Evaluation Metrics")
+        st.json(result["evaluation_report"])
+
+    with tab_viz:
+        st.subheader("Visualizations")
+        for name, path in result["visualization_report"].items():
+            st.image(path, caption=name)

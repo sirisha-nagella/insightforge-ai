@@ -20,3 +20,7 @@ venv/
 # Data files (keep the folder, ignore its contents)
 data/*
 !data/.gitkeep
+
+# Generated visualization artifacts (keep the folder, ignore the PNGs)
+reports/visualizations/*.png
+!reports/visualizations/.gitkeep

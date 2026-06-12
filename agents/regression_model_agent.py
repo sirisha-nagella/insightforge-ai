@@ -19,6 +19,18 @@ def regression_model_agent(state):
 
     y = df[target_column]
 
+    # Drop rows with a missing target (labels can't be imputed).
+
+    valid = y.notna()
+
+    X = X[valid]
+
+    y = y[valid]
+
+    # Drop feature columns that are entirely missing (no signal, breaks imputation).
+
+    X = X.dropna(axis=1, how="all")
+
     # Numeric Columns:
 
     for col in X.select_dtypes(include=["number"]).columns:
@@ -121,5 +133,16 @@ def regression_model_agent(state):
         "predictions": best_predictions.tolist()
 
     }
+
+    # Feature importances are only available for tree models (Random Forest).
+
+    if best_model == "Random Forest":
+
+        state["model_report"]["feature_importances"] = dict(
+            zip(
+                X.columns,
+                models[best_model].feature_importances_.tolist()
+            )
+        )
 
     return state
