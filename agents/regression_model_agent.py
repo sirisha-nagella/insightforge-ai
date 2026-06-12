@@ -1,16 +1,19 @@
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import(
+    mean_absolute_error,
+    r2_score
+)
 
 
-def model_agent(state):
+def regression_model_agent(state):
 
     df = state["dataframe"]
 
-    target_column = "Survived"
+    target_column = state["target_column"]
 
     X = df.drop(columns=[target_column])
 
@@ -55,19 +58,17 @@ def model_agent(state):
 
     models = {
 
-        "Logistic Regression":
-            LogisticRegression(max_iter=1000),
+        "Linear Regression":
+            LinearRegression(),
 
         "Decision Tree":
-            DecisionTreeClassifier(),
+            DecisionTreeRegressor(random_state=42),
 
         "Random Forest":
-            RandomForestClassifier()
+            RandomForestRegressor(random_state=42)
     }
 
-    # Train and compare:
-
-    # Loop
+    # Train and compare (best = highest R2):
 
     results = {}
 
@@ -84,13 +85,13 @@ def model_agent(state):
             X_test
         )
 
-        accuracy = accuracy_score(
+        score = r2_score(
             y_test,
             predictions
         )
 
         results[name] = round(
-            accuracy,
+            score,
             4
         )
 
@@ -113,7 +114,7 @@ def model_agent(state):
 
         "best_model": best_model,
 
-        "best_accuracy": results[best_model],
+        "best_score": results[best_model],
 
         "y_test": y_test.tolist(),
 

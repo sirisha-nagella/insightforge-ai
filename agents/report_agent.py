@@ -4,6 +4,7 @@ def report_agent(state):
     fe = state["feature_engineering_report"]
     model_report = state["model_report"]
     evaluation = state["evaluation_report"]
+    problem_type = state["problem_type"]
 
     def _format(d):
         if not d:
@@ -38,14 +39,18 @@ Drop candidates: {fe['drop_candidates']}
 
 Model Results
 
+Problem Type:
+{problem_type}
+
 Best Model:
 {model_report['best_model']}
+"""
 
+    if problem_type == "classification":
+
+        report += f"""
 Accuracy:
 {model_report['best_accuracy']}
-"""
-    
-    report += f"""
 
 Evaluation Metrics
 
@@ -57,8 +62,22 @@ Recall: {evaluation['recall']:.2f}
 
 F1 Score: {evaluation['f1']:.2f}
 """
-    
+
+    else:
+
+        report += f"""
+R2 Score:
+{model_report['best_score']}
+
+Evaluation Metrics
+
+MAE: {evaluation['mae']:.2f}
+
+RMSE: {evaluation['rmse']:.2f}
+
+R2: {evaluation['r2']:.2f}
+"""
+
     state["final_report"] = report
 
     return state
-

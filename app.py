@@ -14,11 +14,17 @@ if uploaded_file:
 
     df = pd.read_csv(uploaded_file)
 
+    target_column = st.selectbox(
+        "Select Target Column",
+        df.columns
+    )
+
     workflow = create_graph()
 
     result = workflow.invoke(
         {
-            "dataframe": df
+            "dataframe": df,
+            "target_column": target_column
         }
     )
 
@@ -39,7 +45,11 @@ if uploaded_file:
     st.subheader("Model Results")
 
     st.json(
-        result["model_report"]
+        {
+            k: v
+            for k, v in result["model_report"].items()
+            if k not in ("y_test", "predictions")
+        }
     )
 
     st.subheader(
