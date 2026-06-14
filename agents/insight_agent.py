@@ -24,6 +24,12 @@ def insight_agent(state):
     Based on the results below, write 3-4 short insights in plain English.
     {json.dumps(context, default=str)}"""
 
-    state["insight_report"] = ask(prompt)
+    try:
+        state["insight_report"] = ask(prompt)
+    except Exception as e:
+        # LLM unavailable (e.g. Ollama down) — degrade gracefully so the
+        # rest of the pipeline (report, charts) still renders.
+        state["insight_report"] = f"Insights unavailable (LLM error: {e})"
+
     return state
 
