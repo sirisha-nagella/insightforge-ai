@@ -21,5 +21,7 @@ class AgentState(TypedDict):
 
     evaluation_report: dict
 
+    insight_report: str
+
     final_report: str
     

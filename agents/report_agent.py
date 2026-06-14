@@ -80,4 +80,6 @@ R2: {evaluation['r2']:.2f}
 
     state["final_report"] = report
 
+    state["final_report"] += "\n\n## Insights\n" + state.get("insight_report", "")
+
     return state

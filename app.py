@@ -33,13 +33,14 @@ if uploaded_file:
         f"Detected problem type: **{result['problem_type']}**"
     )
 
-    tab_data, tab_report, tab_fe, tab_model, tab_viz = st.tabs(
+    tab_data, tab_report, tab_fe, tab_model, tab_viz, tab_insights = st.tabs(
         [
             "Dataset",
             "Report",
             "Feature Engineering",
             "Model & Evaluation",
             "Visualizations",
+            "AI Insights",
         ]
     )
 
@@ -72,3 +73,9 @@ if uploaded_file:
         st.subheader("Visualizations")
         for name, path in result["visualization_report"].items():
             st.image(path, caption=name)
+
+    with tab_insights:
+        st.subheader("AI Insights")
+        st.write(result["insight_report"])
+
+
