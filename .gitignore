@@ -24,3 +24,9 @@ data/*
 # Generated visualization artifacts (keep the folder, ignore the PNGs)
 reports/visualizations/*.png
 !reports/visualizations/.gitkeep
+
+# SQLite memory store (generated at runtime)
+insightforge.db
+insightforge.db-journal
+insightforge.db-wal
+insightforge.db-shm

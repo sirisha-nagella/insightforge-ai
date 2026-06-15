@@ -3,6 +3,11 @@ import pandas as pd
 
 from workflow.graph import create_graph
 
+from utils.db import init_db, save_run, get_history
+
+init_db() # creates the table on first run, does nothing after
+
+
 st.title("InsightForge AI")
 
 uploaded_file = st.file_uploader(
@@ -78,4 +83,27 @@ if uploaded_file:
         st.subheader("AI Insights")
         st.write(result["insight_report"])
 
+    # after the pipeline finishes, save the outcome
+    mr = result.get("model_report", {})
+    score = mr.get("best_accuracy") or mr.get("best_score")
+    save_run(
+        uploaded_file.name,
+        target_column,
+        result.get("problem_type"),
+        mr.get("best_model"),
+        score,
+    )
 
+# Past runs (shown whether or not a file was uploaded this session)
+st.subheader("Past Runs")
+history = get_history()
+if history:
+    st.dataframe(
+        pd.DataFrame(
+            history,
+            columns=["Dataset", "Target", "Type", "Best Model", "Score", "When"],
+        )
+    )
+else:
+    st.write("No runs yet.")
+    
