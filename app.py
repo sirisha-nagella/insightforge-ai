@@ -1,6 +1,9 @@
+import asyncio
+
 import streamlit as st
 import pandas as pd
 import utils.tools as tools
+import utils.mcp_client as mcp_client
 
 from workflow.graph import create_graph
 
@@ -116,6 +119,12 @@ else:
 question = st.text_input("Ask a question about your data or past runs")
 if question:
     st.write(tools.ask(question))
+
+# MCP-powered Q&A over files in ./data (filesystem MCP server)
+
+mcp_question = st.text_input("Ask via MCP (reads files in ./data)")
+if mcp_question:
+    st.write(asyncio.run(mcp_client.ask(mcp_question)))
 
 
 
