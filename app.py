@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import utils.tools as tools
 
 from workflow.graph import create_graph
 
@@ -18,6 +19,8 @@ uploaded_file = st.file_uploader(
 if uploaded_file:
 
     df = pd.read_csv(uploaded_file)
+
+    tools.df = df  # let the Q&A tools query the uploaded dataframe
 
     target_column = st.selectbox(
         "Select Target Column",
@@ -107,3 +110,12 @@ if history:
 else:
     st.write("No runs yet.")
     
+
+# add a question in streamlit: tools addition
+
+question = st.text_input("Ask a question about your data or past runs")
+if question:
+    st.write(tools.ask(question))
+
+
+
