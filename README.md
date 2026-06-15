@@ -238,7 +238,7 @@ The project was built incrementally, each version adding one capability.
 
 ## Notes & Limitations
 
-- **Runs locally by design.** Because inference happens through a local Ollama model, the app can't be deployed to hosting that has no Ollama server (e.g. free Streamlit Cloud). This is intentional — it keeps data private and costs at zero. A short demo video or screenshots are the best way to share it.
+- **Runs locally by design.** Because inference happens through a local Ollama model, the app can't be deployed to hosting that has no Ollama server (e.g. free Streamlit Cloud). This is intentional — it keeps data private and costs at zero.
 - **No data is committed.** `data/*` and generated artifacts (`reports/visualizations/*.png`, `insightforge.db`) are gitignored.
 - **Tool reliability scales with model size.** Small models handle single, clearly-scoped tool calls well but can struggle with complex multi-tool reasoning. Swap to a larger model in `utils/llm.py` if needed.
 - **MCP server scope.** The filesystem server is scoped to the `data/` folder on purpose — agents are never given access to the whole disk. It handles file operations (read/list), not data analysis; use the data Q&A box for analytical questions.
